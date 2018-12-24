@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.tdh.urlInterceptor</groupId>
+		<artifactId>urlInterceptor</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.tdh.urlInterceptor</groupId>
+	<artifactId>urlInterceptor-app</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>urlInterceptor-app</name>
+	<packaging>pom</packaging>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<modules>
+		<module>urlInterceptor-web</module>
+		<module>urlInterceptor-server</module>
+    <module>urlInterceptor-register</module>
+    <module>urlInterceptor-provider</module>
+    <module>urlInterceptor-consumer</module>
+    <module>urlInterceptor-dashboard</module>
+    <module>urlInterceptor-turbine</module>
+    <module>urlInterceptor-register9501</module>
+    <module>urlInterceptor-register9502</module>
+    <module>urlInterceptor-provider01</module>
+  </modules>
+</project>

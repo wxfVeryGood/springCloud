@@ -1,0 +1,87 @@
+mongodb:
+    address: 127.0.0.1:27017
+    username: gps
+    password: gps
+    database: test
+    authenticationDatabase: test
+    connectionsPerHost: 100
+    connectTimeout: 60000
+    maxWaitTime: 120000
+    maxConnectionIdleTime: 600000
+    threadsAllowedToBlockForConnectionMultiplier: 50
+    socketTimeout: 30000
+    minConnectionsPerHost: 10
+
+server:
+  port: 9400
+  
+spring:
+  application:
+    name: urlInterceptor-provider
+  datasource:
+        name: test
+        url: jdbc:mysql://192.168.1.169:3306/gps_tuning?useUnicode=true&amp;characterEncoding=UTF-8
+        username: ifm
+        password: ifm
+        driver-class-name: com.mysql.jdbc.Driver
+        hikari:
+            connectionTimeout: 60000
+            validationTimeout: 5000
+            idleTimeout: 600000
+            maxLifetime: 1800000
+            minimumIdle: 10
+            maximumPoolSize: 100
+            connectionInitSql: select 1
+            autoCommit: true
+  redis:
+        host: 192.168.1.204
+        password: 
+        port: 6379
+        timeout: 10000
+        pool:
+         max-active: 100
+         max-idle: 10
+         min-idle: 1
+         max-wait: 30000
+         
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.tdh.urlInterceptor.model
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:9500/eureka/,http://localhost:9501/eureka/,http://localhost:9502/eureka/
+      
+feign:
+ hystrix:
+  enabled: true
+  
+ribbon:
+# 设置连接超时时间
+ ConnectTimeout: 5000
+# 设置读取超时时间
+ ReadTimeout: 5000
+# 对所有操作请求都进行重试
+ OkToRetryOnAllOperations: true
+# 切换实例的重试次数
+ MaxAutoRetriesNextServer: 2
+# 对当前实例的重试次数
+ MaxAutoRetries: 1
+ 
+# 设置熔断超时时间
+hystrix:
+ command:
+  default:
+   execution:
+    isolation:
+     thread:
+      timeoutInMilliseconds: 5000
+# 开启熔断功能
+    timeout:
+     enabled: true
+     
+
+  

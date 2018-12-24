@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdh.urlInterceptor.mapper.UrlInterceptorConfigMapper">
+
+    <resultMap id="BaseResultMap" type="com.tdh.urlInterceptor.model.UrlInterceptorConfig">
+        <id column="id" property="id"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="maxTimes" column="max_Times"/>
+        <result property="name" column="name"/>
+        <result property="timeFrequency" column="time_frequency"/>
+        <result property="timeUnit" column="time_unit"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="updatedTime" column="updated_time"/>
+        <result property="url" column="url"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+      url, max_times, name, time_frequency, time_unit, created_time,
+      created_by, updated_time, updated_by
+    </sql>
+
+    <sql id="select_List">
+        id,  url, max_times, name, time_frequency, time_unit, created_time,
+        created_by, updated_time, updated_by
+    </sql>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" useGeneratedKeys="true"
+            parameterType="com.tdh.urlInterceptor.model.UrlInterceptorConfig">
+        insert into url_interceptor_config
+        ( <include refid="Base_Column_List"/> )
+        values
+        (#{url} , #{maxTimes} , #{name} , #{timeFrequency} ,
+        #{timeUnit} ,#{createdTime} ,#{createdBy} ,#{updatedTime} , #{updatedBy} );
+    </insert>
+    <insert id="insertSelective" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            parameterType="com.tdh.urlInterceptor.model.UrlInterceptorConfig">
+        insert into url_interceptor_config
+        (<include refid="Base_Column_List"/>)
+        values (
+        <if test="url != null and url != ''">
+            #{url},
+        </if>
+        <if test="maxTimes != null">
+            #{maxTimes},
+        </if>
+        <if test="name != null and name != ''">
+            #{name},
+        </if>
+        <if test="timeFrequency != null">
+            #{timeFrequency} ,
+        </if>
+        <if test="timeUnit != null and timeUnit != ''">
+            #{timeUnit} ,
+        </if>
+        <if test="createdBy != null">
+            #{createdTime} ,
+        </if>
+        <if test="createdBy != null and createdBy != ''">
+            #{createdBy} ,
+        </if>
+        <if test="updatedBy != null">
+            #{updatedBy} ,
+        </if>
+        <if test="updatedBy != null and updatedBy != '">
+            #{updatedBy}
+        </if>
+        )
+    </insert>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select
+        <include refid="select_List"/>
+        from url_interceptor_config where id = #{uid}
+    </select>
+    <select id="selectByCondition" resultMap="BaseResultMap">
+        select
+        <include refid="select_List"/>
+        from
+        url_interceptor_config
+        where
+        0 = 0 and
+        <if test="id != null">
+            id = #{id} and
+        </if>
+        <if test="url != null and url != ''">
+            url = #{url} and
+        </if>
+        <if test="maxTimes != null">
+            max_times = #{maxTimes} and
+        </if>
+        <if test="name != null and name != ''">
+            name = #{name} and
+        </if>
+        <if test="timeFrequency != null">
+            time_frequency = #{timeFrequency} and
+        </if>
+        <if test="timeUnit != null and timeUnit != ''">
+            time_unit = #{timeUnit} and
+        </if>
+        <if test="createdTime != null">
+            created_time = #{createdTime} and
+        </if>
+        <if test="createdBy != null and createdBy != ''">
+            created_by = #{createdBy} and
+        </if>
+        <if test="updatedTime != null">
+            updated_time = #{updatedTime} and
+        </if>
+        <if test="updatedBy != null and updatedBy != '">
+            updated_by = #{updatedBy}
+        </if>
+    </select>
+    <update id="updateByPrimaryKeySelective">
+        update url_interceptor_config
+        <set>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="maxTimes != null">
+                max_times = #{maxTimes},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="timeFrequency != null">
+                time_frequency = #{timeFrequency},
+            </if>
+            <if test="timeUnit != null and timeUnit != ''">
+                time_unit = #{timeUnit},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime},
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                created_ by = #{createdBy},
+            </if>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime},
+            </if>
+            <if test="updatedBy != null and updatedBy != '">
+                updated_by = #{updatedBy},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updateByPrimaryKey">
+        update url_interceptor_config
+        set
+            url = #{url}  ,
+            max_times = #{maxTimes}  ,
+            name = #{name}  ,
+            time_frequency = #{timeFrequency}  ,
+            time_unit = #{timeUnit}  ,
+            created_time = #{createdTime}  ,
+            created_by = #{createdBy}  ,
+            updated_time = #{updatedTime}  ,
+            updated_by = #{updatedBy}
+        where
+          id = #{id}
+    </update>
+    <select id="findAll" resultMap="BaseResultMap">
+      select <include refid="select_List"/> from url_interceptor_config where 1=1
+    </select>
+</mapper>

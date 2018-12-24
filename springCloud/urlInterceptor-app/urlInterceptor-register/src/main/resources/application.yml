@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: urlInterceptor-register
+#  profiles: eureka-server-9500
+server:
+  port: 9500
+eureka:
+  instance:
+    hostname: eureka-server-9500
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:9501/eureka/,http://localhost:9502/eureka/

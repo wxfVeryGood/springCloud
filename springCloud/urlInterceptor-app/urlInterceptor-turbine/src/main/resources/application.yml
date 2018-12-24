@@ -1,0 +1,15 @@
+spring:
+ application:
+  name: urlInterceptor-turbine
+server:
+ port: 8080
+turbine:
+  appConfig: urlInterceptor-consumer,urlInterceptor-provider
+  aggregator:
+   clusterConfig: default
+  clusterNameExpression: new String("default")
+
+eureka:
+ client:
+  serviceUrl:
+   defaultZone: http://localhost:9500/eureka/,http://localhost:9501/eureka/,http://localhost:9502/eureka/

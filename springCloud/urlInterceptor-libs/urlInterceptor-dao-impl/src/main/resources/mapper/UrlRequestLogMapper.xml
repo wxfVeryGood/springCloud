@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdh.urlInterceptor.mapper.UrlRequestLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.tdh.urlInterceptor.model.UrlRequestLog">
+        <id column="id" property="id"/>
+        <result property="endTime" column="end_time"/>
+        <result property="isValid" column="is_valid"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="updatedTime" column="updated_time"/>
+        <result property="requestIp" column="request_ip"/>
+        <result property="requestTimes" column="request_times"/>
+        <result property="startTime" column="start_time"/>
+        <result property="urlInterceptorConfigId" column="url_interceptor_config_id"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+      url_interceptor_config_id, url, request_ip, request_times,
+      start_time, end_time, is_valid, created_time, created_by,
+      updated_time, updated_by
+    </sql>
+
+    <sql id="select_List">
+      id, url_interceptor_config_id, url, request_ip, request_times,
+      start_time, end_time, is_valid, created_time, created_by,
+      updated_time, updated_by
+    </sql>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" useGeneratedKeys="true"
+            parameterType="com.tdh.urlInterceptor.model.UrlRequestLog">
+        insert into url_request_log
+        (<include refid="Base_Column_List"/>)
+        values
+        (#{urlInterceptorConfigId} , #{url} ,#{requestIp} ,#{requestTimes} ,
+        #{startTime} ,#{endTime} ,#{isValid} ,#{createdTime} ,#{createdBy} ,
+        #{updatedTime} ,#{updatedBy} )
+        on duplicate key
+        update request_times = #{requestTimes}, updated_time = #{startTime} ,
+        updated_by = #{createdBy}, end_time=#{startTime}, is_valid=0
+
+    </insert>
+    <insert id="insertSelective" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            parameterType="com.tdh.urlInterceptor.model.UrlRequestLog">
+        insert into url_request_log
+        (<include refid="Base_Column_List"/>)
+        values (
+        <if test="urlInterceptorConfigId != null">
+            #{urlInterceptorConfigId} ,
+        </if>
+        <if test="url != null and url != ''">
+            #{url} ,
+        </if>
+        <if test="requestIp != null and requestIp != ''">
+            #{requestIp} ,
+        </if>
+        <if test="requestTimes != null">
+            #{requestTimes} ,
+        </if>
+        <if test="startTime != null">
+            #{startTime} ,
+        </if>
+        <if test="endTime != null">
+            #{endTime} ,
+        </if>
+        <if test="isValid != null">
+            #{isValid} ,
+        </if>
+        <if test="createdTime != null">
+            #{createdTime} ,
+        </if>
+        <if test="createdBy != null and createdBy != ''">
+            #{createdBy} ,
+        </if>
+        <if test="updatedBy != null and updatedBy != ''">
+            #{updatedBy} ,
+        </if>
+        <if test="updatedTime != null">
+            #{updatedTime}
+        </if>
+        )
+    </insert>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select
+        <include refid="select_List"/>
+        from url_interceptor_config where id = #{uid}
+    </select>
+
+    <select id="selectByCondition" resultMap="BaseResultMap">
+        select
+        <include refid="select_List"/>
+        from
+        url_request_log
+        where
+        <if test="id != null">
+            id = #{id} and
+        </if>
+        <if test="urlInterceptorConfigId != null">
+            url_interceptor_config_id = #{urlInterceptorConfigId} and
+        </if>
+        <if test="url != null and url != ''">
+            url = #{url} and
+        </if>
+        <if test="requestIp != null and requestIp != ''">
+            request_ip = #{requestIp} and
+        </if>
+        <if test="requestTimes != null">
+            request_times = #{requestTimes} and
+        </if>
+        <if test="startTime != null">
+            start_time = #{startTime} and
+        </if>
+        <if test="endTime != null">
+            end_time = #{endTime} and
+        </if>
+        <if test="isValid != null">
+            is_valid = #{isValid} and
+        </if>
+        <if test="createdTime != null">
+            created_time = #{createdTime} and
+        </if>
+        <if test="createdBy != null and createdBy != ''">
+            created_by = #{createdBy} and
+        </if>
+        <if test="updatedBy != null and updatedBy != ''">
+            updated_by = #{updatedBy} and
+        </if>
+        <if test="updatedTime != null">
+            updated_time = #{updatedTime}
+        </if>
+    </select>
+    <update id="updateByPrimaryKeySelective">
+        update url_request_log
+        <set>
+            <if test="urlInterceptorConfigId != null">
+                url_interceptor_config_id = #{urlInterceptorConfigId},
+            </if>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="requestIp != null and requestIp != ''">
+                request_ip = #{requestIp},
+            </if>
+            <if test="requestTimes != null">
+                request_times = #{requestTimes},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="isValid != null">
+                is_valid = #{isValid},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime},
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                created_by = #{createdBy},
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                updated_by = #{updatedBy},
+            </if>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updateByPrimaryKey">
+        update url_request_log
+        set
+            url_interceptor_config_id = #{urlInterceptorConfigId} and
+            url = #{url} and
+            request_ip = #{requestIp} and
+            request_times = #{requestTimes} and
+            start_time = #{startTime} and
+            end_time = #{endTime} and
+            is_valid = #{isValid} and
+            created_time = #{createdTime} and
+            created_by = #{createdBy} and
+            updated_by = #{updatedBy} and
+            updated_time = #{updatedTime}
+        where
+          id = #{id}
+    </update>
+    <select id="getLatestLog" resultMap="BaseResultMap" parameterType="string">
+      select <include refid="select_List"/>
+        from url_request_log where url = #{uri} order by id desc limit 1
+    </select>
+    <update id="updateIsValid">
+      update url_request_log set is_valid = 0 where request_ip = #{ip} and url = #{requestURI}
+    </update>
+</mapper>

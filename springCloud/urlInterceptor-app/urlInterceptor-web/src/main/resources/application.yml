@@ -1,0 +1,15 @@
+dubbo:
+  protocol:
+    port: -1
+    name: dubbo
+  application:
+    name: urlInterceptor-web-app
+  registry:
+    address: zookeeper://127.0.0.1:2181
+  packageName: com.tdh.urlInterceptor
+
+server:
+  port: 8080
+
+
+  
