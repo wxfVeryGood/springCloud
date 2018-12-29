@@ -35,6 +35,9 @@
 		<mongodb.version>3.4.3</mongodb.version>
 		<!-- <spring.cloud.version>1.4.6.RELEASE</spring.cloud.version> -->
 		<spring.cloud.version>Dalston.RELEASE</spring.cloud.version>
+		<!-- <spring.cloud.version>Edgware.RELEASE</spring.cloud.version> -->
+		<!-- <spring.cloud.version>Finchley.RELEASE</spring.cloud.version> -->
+		<zipkin.autoconfigure.collector.kafka>2.11.12</zipkin.autoconfigure.collector.kafka>
 	</properties>
 
 	<distributionManagement>
@@ -361,6 +364,12 @@
 				<version>${spring.cloud.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			<!-- kafka -->
+			<dependency>
+				<groupId>io.zipkin.java</groupId>
+				<artifactId>zipkin-autoconfigure-collector-kafka</artifactId>
+				<version>${zipkin.autoconfigure.collector.kafka}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

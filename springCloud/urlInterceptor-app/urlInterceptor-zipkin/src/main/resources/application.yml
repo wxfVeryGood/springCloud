@@ -1,0 +1,66 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9500/eureka/,http://localhost:9501/eureka/,http://localhost:9502/eureka/
+  
+server:
+  port: 9000
+  connection-timeout: 5000
+  session:
+    timeout: 30
+#  tomcat:
+#    max-connections: 500
+#    max-threads: 500
+#    min-spare-threads: 10
+#    uri-encoding: UTF-8
+  undertow:
+    io-threads: 4
+    worker-threads: 500
+    buffer-size: 1024
+    direct-buffers: true
+
+spring:
+  application:
+    name: urlInterceptor-zipkin
+  sleuth:
+   enabled: false
+   sampler:
+    percentage: 1.0
+  datasource:
+        name: zipkin
+        url: jdbc:mysql://127.0.0.1:3306/zipkin?useUnicode=true&amp;characterEncoding=UTF-8
+        username: root
+        password: 123456
+        driver-class-name: com.mysql.jdbc.Driver
+        schema:
+        - classpath:/zipkin.sql
+        initialize: true
+        continue-on-error: true
+        hikari:
+            connectionTimeout: 60000
+            validationTimeout: 5000
+            idleTimeout: 600000
+            maxLifetime: 1800000
+            minimumIdle: 10
+            maximumPoolSize: 100
+            connectionInitSql: select 1
+            autoCommit: true
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: 127.0.0.1:9092 #ip地址根据实际kafka集群地址
+          zkNodes: 127.0.0.1:2181
+
+zipkin:
+  storage:
+    type: mysql
+#  collector:
+#   sample-rate: 1.0
+#   kafka:
+#    bootstrap-servers: 127.0.0.1:9092
+#    zookeeper: 127.0.0.1:2181
+#    #kafka主题，不配置时默认使用zipkin
+#    topic: zipkin
+   
+ 

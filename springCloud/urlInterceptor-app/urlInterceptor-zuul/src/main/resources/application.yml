@@ -1,0 +1,96 @@
+server:
+  port: 8888
+  connection-timeout: 5000
+  session:
+    timeout: 30
+#  tomcat:
+#    max-connections: 500
+#    max-threads: 500
+#    min-spare-threads: 10
+#    uri-encoding: UTF-8
+  undertow:
+    io-threads: 4
+    worker-threads: 500
+    buffer-size: 1024
+    direct-buffers: true
+    
+    
+spring:
+  application:
+    name: urlInterceptor-zuul
+  zipkin:
+    base-url: http://localhost:9000
+#    sender:
+#     type: kafka
+#    kafka:
+#     topic: zipkin
+  sleuth:
+    sampler:
+      percentage: 1.0
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
+  kafka:
+#   bootstrap-servers: 127.0.0.1:9092
+    stream:
+      kafka:
+        binder:
+          brokers: 127.0.0.1:9092  #ip地址根据实际kafka集群地址
+          zkNodes: 127.0.0.1:2181
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9500/eureka/,http://localhost:9501/eureka/,http://localhost:9502/eureka/
+      
+zuul:
+ routes:
+    provider:
+     path: /provider/**
+     serviceId: urlInterceptor-provider
+    consumer:
+     path: /consumer/**
+     serviceId: urlInterceptor-consumer
+ retryable: true
+ ribbon-isolation-strategy: THREAD
+ host:
+  max-total-connections: 500
+  max-per-route-connections: 50
+#  connect-timeout-millis: 5000
+#  socket-timeout-millis: 10000
+#当zuul隔离策略为（ribbon-isolation-strategy）为“SEMAPHORE”时使用
+# semaphore:
+#    max-semaphores: 500
+      
+ribbon:
+# 设置连接超时时间
+ ConnectTimeout: 5000
+# 设置读取超时时间
+ ReadTimeout: 10000
+# 对所有操作请求都进行重试
+ OkToRetryOnAllOperations: true
+# 切换实例的重试次数
+ MaxAutoRetriesNextServer: 2
+# 对当前实例的重试次数
+ MaxAutoRetries: 1
+ 
+# 设置熔断超时时间
+hystrix:
+ command:
+  default:
+   execution:
+    isolation:
+     thread:
+      timeoutInMilliseconds: 10000
+# 开启熔断功能
+    timeout:
+     enabled: true
+ threadpool:
+  default:
+   coreSize: 10
+   maximumSize: 500
+   allowMaximumSizeToDivergeFromCoreSize: true
+   maxQueueSize: -1   
+   
+  
+ 
